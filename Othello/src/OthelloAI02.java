@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Minimax implements IOthelloAI {
+public class OthelloAI02 implements IOthelloAI {
     int maxPlayer;
     @Override
     public Position decideMove(GameState state) {
