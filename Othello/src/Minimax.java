@@ -4,11 +4,11 @@ public class Minimax implements IOthelloAI {
     @Override
     public Position decideMove(GameState state) {
         maxPlayer = state.getPlayerInTurn();
-        MiniMaxReturnType max = maxValue(state, 0);
+        MiniMaxReturnType max = maxValue(state);
         return max.move;
     }
 
-    private MiniMaxReturnType maxValue(GameState state, int gametreedepth) {
+    private MiniMaxReturnType maxValue(GameState state) {
         if (state.isFinished() || state.legalMoves().isEmpty()) {
             return new MiniMaxReturnType(utility(state, maxPlayer), new Position(-1, -1));
         }
@@ -16,7 +16,7 @@ public class Minimax implements IOthelloAI {
         Position bestMove = new Position(-1, -1);
 
         for (Position pos : state.legalMoves()) {
-            MiniMaxReturnType minimum = minValue(result(state, pos), gametreedepth+1);
+            MiniMaxReturnType minimum = minValue(result(state, pos));
             if (minimum.miniMaxValue > min) {
                 min = minimum.miniMaxValue;
                 bestMove = pos;
@@ -25,7 +25,7 @@ public class Minimax implements IOthelloAI {
         return new MiniMaxReturnType(min, bestMove);
     }
 
-    private MiniMaxReturnType minValue(GameState state, int gametreedepth) {
+    private MiniMaxReturnType minValue(GameState state) {
         if (state.isFinished() || state.legalMoves().isEmpty()) {
             return new MiniMaxReturnType(utility(state, maxPlayer), new Position(-1, -1));
         }
@@ -34,7 +34,7 @@ public class Minimax implements IOthelloAI {
 
         for (Position pos : state.legalMoves()) {
 
-            MiniMaxReturnType maximum = maxValue(result(state, pos), gametreedepth+1);
+            MiniMaxReturnType maximum = maxValue(result(state, pos));
             if (maximum.miniMaxValue < max) {
                 max = maximum.miniMaxValue;
                 bestMove = pos;
