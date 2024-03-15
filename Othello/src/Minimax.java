@@ -3,12 +3,12 @@ public class Minimax implements IOthelloAI {
 
     @Override
     public Position decideMove(GameState state) {
-        maxPlayer = 1;
-        MiniMaxReturnType max = maxValue(state);
+        maxPlayer = state.getPlayerInTurn();
+        MiniMaxReturnType max = maxValue(state, 0);
         return max.move;
     }
 
-    private MiniMaxReturnType maxValue(GameState state) {
+    private MiniMaxReturnType maxValue(GameState state, int gametreedepth) {
         if (state.isFinished() || state.legalMoves().isEmpty()) {
             return new MiniMaxReturnType(utility(state, maxPlayer), new Position(-1, -1));
         }
@@ -16,7 +16,7 @@ public class Minimax implements IOthelloAI {
         Position bestMove = new Position(-1, -1);
 
         for (Position pos : state.legalMoves()) {
-            MiniMaxReturnType minimum = minValue(result(state, pos));
+            MiniMaxReturnType minimum = minValue(result(state, pos), gametreedepth+1);
             if (minimum.miniMaxValue > min) {
                 min = minimum.miniMaxValue;
                 bestMove = pos;
@@ -25,7 +25,7 @@ public class Minimax implements IOthelloAI {
         return new MiniMaxReturnType(min, bestMove);
     }
 
-    private MiniMaxReturnType minValue(GameState state) {
+    private MiniMaxReturnType minValue(GameState state, int gametreedepth) {
         if (state.isFinished() || state.legalMoves().isEmpty()) {
             return new MiniMaxReturnType(utility(state, maxPlayer), new Position(-1, -1));
         }
@@ -34,20 +34,18 @@ public class Minimax implements IOthelloAI {
 
         for (Position pos : state.legalMoves()) {
 
-            MiniMaxReturnType maximum = maxValue(result(state, pos));
+            MiniMaxReturnType maximum = maxValue(result(state, pos), gametreedepth+1);
             if (maximum.miniMaxValue < max) {
                 max = maximum.miniMaxValue;
                 bestMove = pos;
             }
         }
-        // System.out.println("Called from min: " + bestMove.toString() + ", " + max);
         return new MiniMaxReturnType(max, bestMove);
     }
 
     private GameState result(GameState state, Position action) {
         GameState stateCopy = new GameState(state.getBoard(), state.getPlayerInTurn()); // black 1, white
         stateCopy.insertToken(action); // stateCopy.insertToken
-        stateCopy.changePlayer();
         return stateCopy;
     }
 
