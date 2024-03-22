@@ -1,7 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class OthelloAI02 implements IOthelloAI {
+public class OthelloAIGroup02 implements IOthelloAI {
     int maxPlayer;
 
     /**
@@ -110,7 +110,8 @@ public class OthelloAI02 implements IOthelloAI {
      * 
      * @param state  the current state of the game.
      * @param player the player for which the utility is calculated.
-     * @return an integer representing the utility value, as based on tokens on the board.
+     * @return an integer representing the utility value, as based on tokens on the
+     *         board.
      */
     private int utility(GameState state, int player) {
         player -= 1;
