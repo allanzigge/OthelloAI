@@ -19,7 +19,7 @@ public class OthelloAI02 implements IOthelloAI {
     }
 
     /**
-     * Calculates the maximum value for the current player.
+     * Maximizes the utility for the player, in a given a state.
      * 
      * @param state the current state of the game.
      * @param alpha the maximum value available for the max player.
@@ -55,7 +55,7 @@ public class OthelloAI02 implements IOthelloAI {
     }
 
     /**
-     * Calculates the minimum value for the current player.
+     * Minimizes the utility for the player, in a given a state.
      * 
      * @param state the current state of the game.
      * @param alpha the maximum value available for the max player.
@@ -110,7 +110,7 @@ public class OthelloAI02 implements IOthelloAI {
      * 
      * @param state  the current state of the game.
      * @param player the player for which the utility is calculated.
-     * @return an integer representing the utility value.
+     * @return an integer representing the utility value, as based on tokens on the board.
      */
     private int utility(GameState state, int player) {
         player -= 1;
